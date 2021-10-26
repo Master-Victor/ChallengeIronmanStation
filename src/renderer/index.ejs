@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello Electron React!</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    window.electron.ipcRenderer.once('ipc-example', (arg) => {
+      // eslint-disable-next-line no-console
+      console.log('desde index aqui',arg);
+    });
+
+    window.electron.ipcRenderer.myPing();
+    window.electron.ipcRenderer.on('send-json-evaluations', (arg) => {
+      // eslint-disable-next-line no-console
+      console.dir(arg);
+    });    
+    //una vez que tengo los datos debo pasarlos al react state y listo el pollo
+    window.electron.ipcRenderer.myReact();
+  </script>
+</html>
