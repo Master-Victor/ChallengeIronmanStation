@@ -1,0 +1,45 @@
+.orbit { 
+    -webkit-transform-style: preserve-3d; 
+    -webkit-transform: rotateX(80deg) rotateY(20deg);
+}
+
+#atom .orbit:nth-child(2) { 
+   -webkit-transform: rotateX(80deg) rotateY(70deg)
+}
+#atom .orbit:nth-child(3) { 
+   -webkit-transform: rotateX(80deg) rotateY(-20deg)
+}
+#atom .orbit:nth-child(4) { 
+   -webkit-transform: rotateX(80deg) rotateY(-50deg)
+}
+
+.path { 
+    -webkit-transform-style: preserve-3d;
+    -webkit-animation-name: pathRotate;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear; 
+}
+
+.electron { 
+    -webkit-animation-name: electronFix; 
+    -webkit-animation-duration: 2s; 
+    -webkit-animation-iteration-count: infinite; 
+    -webkit-animation-timing-function: linear;  
+}
+
+@-webkit-keyframes pathRotate { 
+    from { 
+       -webkit-transform: rotateZ(0deg);
+    } to { 
+       -webkit-transform: rotateZ(360deg); 
+    } 
+}
+
+@-webkit-keyframes electronFix { 
+    from { 
+       -webkit-transform: rotateX(90deg) rotateY(0deg); 
+    } to { 
+       -webkit-transform: rotateX(90deg) rotateY(-360deg); 
+    } 
+}

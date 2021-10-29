@@ -14,11 +14,17 @@
     });
 
     window.electron.ipcRenderer.myPing();
-    window.electron.ipcRenderer.on('send-json-evaluations', (arg) => {
-      // eslint-disable-next-line no-console
-      console.dir(arg);
-    });    
+    // window.electron.ipcRenderer.on('send-json-evaluations', (arg) => {
+    //   // eslint-disable-next-line no-console
+    //   console.dir(arg);
+    // });    
     //una vez que tengo los datos debo pasarlos al react state y listo el pollo
-    window.electron.ipcRenderer.myReact();
+    //import { useSelector } from 'react-redux'
+    // const obtenerDatos = useSelector(store => store.evaluations.getData);
+    // console.log('obtener datos desde archivo extraño',obtenerDatos)
+    // if( obtenerDatos === true ){
+    //window.electron.ipcRenderer.myReact();
+    // }
+    // 
   </script>
 </html>

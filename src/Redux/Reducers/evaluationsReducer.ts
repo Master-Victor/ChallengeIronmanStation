@@ -12,7 +12,7 @@ const data : Evaluations  = {
             value: 2
           },
           {
-            label: 'valor',
+            label: 'Loading',
             value: 3
           }
         ]
@@ -21,7 +21,8 @@ const data : Evaluations  = {
 
 const initialState = {
     data,
-    status: 'idle'
+    status: 'idle',
+    getData: false
 }
 
 //type
@@ -35,9 +36,9 @@ const EVALUATION_ERROR = 'EVALUATION_ERROR';
 export default function evaluationReducer(state = initialState, action: AnyAction){
     switch (action.type) {
         case LOADING:
-            return {...state, status: 'loading'}
+            return {...state, status: 'loading', getData: true}
         case EVALUATION_EXITO:
-            return {...state, data: action.payload, status: 'success'}
+            return {...state, data: action.payload, status: 'success', getData: false}
         case EVALUATION_ERROR:
             return {...state, data: [], status: 'error'}            
         default:
@@ -47,28 +48,23 @@ export default function evaluationReducer(state = initialState, action: AnyActio
 
 //action
 
-export const RegisterUsuarioActionEmail = () => async( dispatch: Dispatch ) =>{
+export const getEvaluationAction = () => async( dispatch: Dispatch/*, getState : any*/ ) =>{
     dispatch({
         type:LOADING
     })
-    try{
-        dispatch({
-            type: EVALUATION_EXITO,
-            payload: {
-                evaluation: {
-                    // uid: user,
-                    // email: email
-                }
-            }
-        })
-        localStorage.setItem('usuario', JSON.stringify({
-            // uid: user,
-            // email: email
-        }))
-    }catch(error){
-        console.log(error)
-        dispatch({
-            type: EVALUATION_ERROR
-        })
-    }
+    window.electron.ipcRenderer.on('send-json-evaluations', ( arg:{} ) => {
+        // eslint-disable-next-line no-console
+        console.dir(arg);
+        try{
+            dispatch({
+                type: EVALUATION_EXITO,
+                payload: arg
+            })
+        }catch(error){
+            console.log(error)
+            dispatch({
+                type: EVALUATION_ERROR
+            })
+        }
+      });     
 }

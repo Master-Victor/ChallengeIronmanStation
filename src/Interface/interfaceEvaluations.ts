@@ -13,3 +13,11 @@ interface Evaluation {
 export interface Evaluations {
     evaluation: Evaluation[]
 }
+
+export interface RootState {
+    evaluations:{
+        data : Evaluations,
+        status: String,
+        getData: Boolean
+    }
+}

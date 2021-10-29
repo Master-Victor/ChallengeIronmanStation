@@ -1,21 +1,31 @@
-import { MemoryRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
+import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import './CSS/list.css'
 import { Evaluations } from '../Interface/interfaceEvaluations'
+import { useDispatch } from 'react-redux';
+import { getEvaluationAction } from '../Redux/Reducers/evaluationsReducer'
+import { useEffect } from 'react'
+import newEvaluation from './Components/newEvaluation';
+import Menu from './Components/Menu';
+import './CSS/atom.css'
+//import { getEvaluationAction } from '../Redux/Reducers/evaluationsReducer';
+declare global {
+	interface Window {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		[x: string]: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		require: any;
+	}
+}
 
 const listEvaluation = () => {
 
+  const dispatch = useDispatch()
 
-  // useEffect(() => {
-  //   //envia la peticion
-  //   ipcRenderer.send('anything-asynchronous', 'ping')
-  //   // reply, respuesta
-  //   ipcRenderer.on('asynchronous-reply', (arg) => {
-  //   console.log("Hiii",arg) // prints "Hiii pong"
-  //   })
-  // });
-
+  useEffect(() => {
+    dispatch(getEvaluationAction())
+  },[]
+);
 
   const mockData: Evaluations = {
     evaluation: [{
@@ -48,8 +58,9 @@ const listEvaluation = () => {
     }
     ]
   }
+
   return (
-    <div>
+    <div style={{paddingLeft:'30vw', margin: '1%'}} >
       <h1>Evaluaciones</h1>
       <table id="customers">
         <tr>
@@ -67,44 +78,38 @@ const listEvaluation = () => {
           })
         }
       </table>
+    <button onClick={ ()=> { window.electron.ipcRenderer.myReact() } } >peticion react state</button>
     </div>
   );
 }
 
 const Hello = () => {
   return (
-    <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon} />
-      </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-        <Link to='/list' >lista</Link>
-      </div>
+
+    <div id="main">
+        <div id="atom">
+            <div className="orbit">
+                <div className="path">
+                    <div className="electron"></div>
+                </div>
+            </div>
+            <div className="orbit">
+                <div className="path">
+                    <div className="electron"></div>
+                </div>
+            </div>
+            <div className="orbit">
+                <div className="path">
+                    <div className="electron"></div>
+                </div>
+            </div>
+            <div className="orbit">
+                <div className="path">
+                    <div className="electron"></div>
+                </div>
+            </div>
+            <div id="nucleus"></div>
+        </div>
     </div>
   );
 };
@@ -112,9 +117,11 @@ const Hello = () => {
 export default function App() {
   return (
     <Router>
+      <Menu/>
       <Switch>
         <Route path="/" component={Hello} exact />
         <Route path="/list" component={listEvaluation} />
+        <Route path="/new" component={newEvaluation} />
       </Switch>
     </Router>
   );

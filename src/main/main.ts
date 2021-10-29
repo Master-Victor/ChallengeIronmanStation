@@ -28,13 +28,7 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-// const readJSON = async() => {
-
-//   const res = 
-
-// }
-
-//let dataJson:any;
+let dataJson : {};
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -46,9 +40,9 @@ ipcMain.on('send-json-evaluations', async (event) => {
 
   try {
     const raw = await fs.readFileSync('./mockData.JSON');
-    const datos = JSON.parse(raw);
-    console.dir(datos);
-    event.reply('send-json-evaluations', (datos));    
+    dataJson = JSON.parse(raw);
+    console.dir(dataJson);
+    event.reply('send-json-evaluations', (dataJson));    
   } catch (error) {
     event.reply('send-json-evaluations', (error)); 
   }
@@ -109,6 +103,8 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      //contextIsolation: false funciona pero me quita la API de contextBridge
     },
   });
 
