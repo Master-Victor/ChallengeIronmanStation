@@ -18,6 +18,7 @@ export interface RootState {
     evaluations:{
         data : Evaluations,
         status: String,
-        getData: Boolean
+        getData: Boolean,
+        detail: Evaluation[]
     }
 }

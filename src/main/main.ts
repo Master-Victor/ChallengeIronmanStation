@@ -16,6 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { Evaluations } from '../Interface/interfaceEvaluations';
 let fs = require('fs');
 
 export default class AppUpdater {
@@ -28,7 +29,7 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-let dataJson : {};
+let dataJson : Evaluations;
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -46,6 +47,12 @@ ipcMain.on('send-json-evaluations', async (event) => {
   } catch (error) {
     event.reply('send-json-evaluations', (error)); 
   }
+});
+
+ipcMain.on('filter-json-evaluations', async (event, data) => {
+
+  event.reply('filter-json-evaluations', dataJson.evaluation.filter( x => x.id === data ) ); 
+  
 });
 
 ipcMain.on('anything-asynchronous', ( arg) => {

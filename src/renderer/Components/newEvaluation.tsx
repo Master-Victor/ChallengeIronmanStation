@@ -25,6 +25,8 @@ const newEvaluation = () => {
                     </span>
                 </label>
                 <button style={{ marginLeft: '10px' }} >+</button>
+                <br/>
+                <button style={{ marginLeft: '10px', marginTop: '10vh' }} > Crear evaluacion </button>
             </form>
         </div>
     )

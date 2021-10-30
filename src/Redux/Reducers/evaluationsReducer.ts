@@ -22,14 +22,15 @@ const data : Evaluations  = {
 const initialState = {
     data,
     status: 'idle',
-    getData: false
+    getData: false,
+    detail: {}
 }
 
 //type
 const LOADING = 'LOADING'
 const EVALUATION_EXITO = 'EVALUATION_EXITO';
 const EVALUATION_ERROR = 'EVALUATION_ERROR';
-
+const DETALLE_EVALUATION_EXITO = 'DETALLE_EVALUATION_EXITO';
 
 //reducer
 
@@ -39,6 +40,8 @@ export default function evaluationReducer(state = initialState, action: AnyActio
             return {...state, status: 'loading', getData: true}
         case EVALUATION_EXITO:
             return {...state, data: action.payload, status: 'success', getData: false}
+        case DETALLE_EVALUATION_EXITO:
+            return {...state, status: 'success', detail: action.payload}            
         case EVALUATION_ERROR:
             return {...state, data: [], status: 'error'}            
         default:
@@ -59,6 +62,26 @@ export const getEvaluationAction = () => async( dispatch: Dispatch/*, getState :
             dispatch({
                 type: EVALUATION_EXITO,
                 payload: arg
+            })
+        }catch(error){
+            console.log(error)
+            dispatch({
+                type: EVALUATION_ERROR
+            })
+        }
+      });     
+}
+
+export const getEvaluationDetailAction = () => async( dispatch: Dispatch/*, getState : any*/ ) =>{
+    dispatch({
+        type:LOADING
+    })
+    window.electron.ipcRenderer.once('filter-json-evaluations', (dato : [] ) => {
+        // eslint-disable-next-line no-console
+        try{
+            dispatch({
+                type: DETALLE_EVALUATION_EXITO,
+                payload: dato
             })
         }catch(error){
             console.log(error)
