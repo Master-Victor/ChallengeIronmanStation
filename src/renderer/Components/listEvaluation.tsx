@@ -12,9 +12,9 @@ const listEvaluation = () => {
     const dataList = useSelector( (store:RootState) => store.evaluations.data.evaluation );
     const status = useSelector( (store:RootState) => store.evaluations.status );
 
-    console.log(dataList);
+    console.log( 'datos' ,dataList);
 
-    useEffect(() => {
+    useEffect( () => {
       dispatch(getEvaluationAction());
       window.electron.ipcRenderer.read_json_ipc();    //llamo a la funcion para pedir los datos
     },[]
@@ -36,7 +36,7 @@ const listEvaluation = () => {
               <tr key={x.id}>
                 <td>{x.id}</td>
                 <td>  <Link to={`/detail/${x.id}`}  > {x.title} </Link>  </td>
-                <td>{x.results.map(y => <div key={y.value} >{y.label}</div>)}</td>
+                <td> {x.results.length} </td>
               </tr>
               )
             })

@@ -37,11 +37,11 @@ const DETALLE_EVALUATION_EXITO = 'DETALLE_EVALUATION_EXITO';
 export default function evaluationReducer(state = initialState, action: AnyAction){
     switch (action.type) {
         case LOADING:
-            return {...state, status: 'loading', getData: true}
+            return {...state, status: 'loading', getData: true, detail: {}}
         case EVALUATION_EXITO:
             return {...state, data: action.payload, status: 'success', getData: false}
         case DETALLE_EVALUATION_EXITO:
-            return {...state, status: 'success', detail: action.payload}            
+            return {...state, status: 'success', detail: action.payload}             
         case EVALUATION_ERROR:
             return {...state, data: [], status: 'error'}            
         default:
