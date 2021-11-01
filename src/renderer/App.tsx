@@ -4,6 +4,7 @@ import listEvaluation from './Components/listEvaluation';
 import newEvaluation from './Components/newEvaluation';
 import Menu from './Components/Menu';
 import EvaluationDetail from './Components/EvaluationDetail';
+
 declare global {
 	interface Window {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

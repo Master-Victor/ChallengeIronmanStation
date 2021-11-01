@@ -32,7 +32,7 @@ const EvaluationDetail  = ( props : ParentCompProps ) => {
             <h2 style={{ marginLeft: '-15vw', background: 'green', color: 'white', maxWidth: '55vw', padding: '5px' }} > Title: </h2>
             <h3 style={{ marginLeft: '-10vw' }} >{ detail[0].title }</h3>
             <h2 style={{ marginLeft: '-15vw', background: 'green', color: 'white', maxWidth: '55vw', padding: '5px' }} > Resultados: </h2>
-            <h3 style={{ marginLeft: '-10vw' }} >{ detail[0].results.map( x => <span>{x.label}: {x.value} </span> ) }</h3>
+            <h3 style={{ marginLeft: '-10vw' }} >{ detail[0].results.map( x => <span key={x.value} >{x.label}: {x.value} </span> ) }</h3>
             <Link to='/list' >volver</Link>
         </div>
     ):<div> Loading.. </div>

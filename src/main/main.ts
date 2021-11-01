@@ -16,8 +16,17 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { Evaluations } from '../Interface/interfaceEvaluations';
+import { Evaluations, Evaluation } from '../Interface/interfaceEvaluations';
 let fs = require('fs');
+
+const Alert = require("electron-alert");
+let alert = new Alert();
+let swalOptions = {
+	title: "Create",
+	text: "evaluacion creada con exito!",
+	icon: "success",
+	showCancelButton: false
+};
 
 export default class AppUpdater {
   constructor() {
@@ -29,41 +38,40 @@ export default class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-let dataJson : Evaluations;
-
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log("en funcion",msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
+let dataJson: Evaluations;
 
 ipcMain.on('send-json-evaluations', async (event) => {
 
   try {
     const raw = await fs.readFileSync('./mockData.JSON');
     dataJson = JSON.parse(raw);
-    console.dir(dataJson);
-    event.reply('send-json-evaluations', (dataJson));    
+    event.reply('send-json-evaluations', (dataJson));
   } catch (error) {
-    event.reply('send-json-evaluations', (error)); 
+    event.reply('send-json-evaluations', (error));
   }
 });
 
 ipcMain.on('filter-json-evaluations', async (event, data) => {
 
-  event.reply('filter-json-evaluations', dataJson.evaluation.filter( x => x.id === data ) ); 
-  
+  event.reply('filter-json-evaluations', dataJson.evaluation.filter(x => x.id === data));
+
 });
 
-ipcMain.on('anything-asynchronous', ( arg) => {
-  // gets triggered by the async button defined in the App component
-  console.log("async",arg) // prints "async ping"
-})
+ipcMain.on('add-json-evaluations', async (event, data: Evaluation) => {
 
-// gets triggered by the sync button defined in the App component
-ipcMain.on('anything-synchronous', ( arg) => {
-  console.log("sync",arg) // prints "sync ping"
-})
+  try {
+    const raw = await fs.readFileSync('./mockData.JSON');
+    dataJson = JSON.parse(raw);
+    dataJson.evaluation.push(data);
+    dataJson.evaluation[dataJson.evaluation.length - 1].id = dataJson.evaluation.length;
+    await fs.writeFileSync('./mockData.JSON', JSON.stringify(dataJson),'utf-8');
+    alert.fireFrameless(swalOptions, null, true, false);
+    event.reply('add-json-evaluations', (dataJson));
+  } catch (error) {
+    event.reply('add-json-evaluations', (error));
+  }
+
+});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

@@ -12,11 +12,9 @@ const listEvaluation = () => {
     const dataList = useSelector( (store:RootState) => store.evaluations.data.evaluation );
     const status = useSelector( (store:RootState) => store.evaluations.status );
 
-    console.log( 'datos' ,dataList);
-
     useEffect( () => {
       dispatch(getEvaluationAction());
-      window.electron.ipcRenderer.read_json_ipc();    //llamo a la funcion para pedir los datos
+      window.electron.ipcRenderer.read_json_ipc(); 
     },[]
   );
   

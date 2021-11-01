@@ -4,7 +4,7 @@ interface Result {
     value: number
 }
 
-interface Evaluation {
+export interface Evaluation {
     id: number,
     title: string,
     results: Result[]
