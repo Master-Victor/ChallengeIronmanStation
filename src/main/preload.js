@@ -12,14 +12,14 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.send('add-json-evaluations', data);
     },                
     on(channel, func) {
-      const validChannels = ['ipc-example', 'send-json-evaluations', 'filter-json-evaluations', 'add-json-evaluations'];
+      const validChannels = ['send-json-evaluations', 'filter-json-evaluations', 'add-json-evaluations'];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`
         ipcRenderer.on(channel, (event, ...args) => func(...args));
       }
     },
     once(channel, func) {
-      const validChannels = ['ipc-example', 'send-json-evaluations', 'filter-json-evaluations', 'add-json-evaluations'];
+      const validChannels = ['send-json-evaluations', 'filter-json-evaluations', 'add-json-evaluations'];
       if (validChannels.includes(channel)) {
         // Deliberately strip event as it includes `sender`
         ipcRenderer.once(channel, (event, ...args) => func(...args));
