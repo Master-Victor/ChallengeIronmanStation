@@ -12,6 +12,7 @@ const Menu = () => {
                 <Link to='/' style={ location.pathname === '/' ? { color: 'green' } : {} }  > Ironman Station </Link>
                 <Link to='/new' style={ location.pathname === '/new' ? { color: 'green' } : {} } >Nueva Evaluacion</Link>
                 <Link to='/list' style={ location.pathname === '/list' ? { color: 'green' } : {} } >Lista de Evaluaciones</Link>
+                <Link to='/Chart_TEST_js' style={ location.pathname === '/Chart_TEST_js' ? { color: 'green' } : {} } >Chart_TEST_js</Link>
             </div>
         </div>
     )

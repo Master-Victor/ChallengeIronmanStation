@@ -4,6 +4,7 @@ import listEvaluation from './Components/listEvaluation';
 import newEvaluation from './Components/newEvaluation';
 import Menu from './Components/Menu';
 import EvaluationDetail from './Components/EvaluationDetail';
+import Chart_TEST_js from './Components/Chart_TEST_js';
 
 declare global {
 	interface Window {
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/list" component={listEvaluation} />
         <Route path="/new" component={newEvaluation} />
         <Route path="/detail/:id" component={EvaluationDetail} />
+        <Route path="/Chart_TEST_js" component={Chart_TEST_js} />
       </Switch>
     </Router>
   );
